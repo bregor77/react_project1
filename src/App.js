@@ -11,11 +11,6 @@ class App extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
 }
 
-  state = {
-    text: "wpisz datę",
-    error: ""
-  }
-
   handleDateChange = (e) => {
     const value = e.target.value;
     console.log(value);
@@ -24,15 +19,12 @@ class App extends Component {
       .then(res => {
         if (res.ok) {
           console.log(res);
-          console.log(res.body);
-          this.setState({
-            text: "W tym roku: " + res.body.getReader().read().then()
-          })
-          return res.body;
+          return res.text();
         }
-        throw Error(res.status);
-        // console.log(res);
       })
+        .then(data => {
+          this.setState({  text: data })
+        })
       // .then(reader => this.setState({
       //   text: "W tym roku: " + reader.read()
       // }))
